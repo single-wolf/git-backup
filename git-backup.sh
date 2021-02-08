@@ -3,8 +3,10 @@
 #=============================================================================
 # git-backup.sh --- A shell script for automatic and incremental backup of git repositories.
 # Author: Jerry.Zhong < root.zhongm.in >
+# Repository: https://github.com/single-wolf/git-backup
 # Usage git-backup.sh [-h] [-d|--dir] [repo-dir] [-c|--cron] [cron expression] [-p|--push] [-n|--now]
 # License: MIT
+# Have fun XD
 #=============================================================================
 
 #printenv
@@ -372,16 +374,17 @@ function print_help() {
     else
         log_info "SYNOPSIS git-backup.sh [-h] [-d|--dir] [repo-dir] [-c|--cron] [cron expression] [-p|--push] [-n|--now]"
         log_info "DESCRIPTION : "
-        log_info "[repo-dir]        optional, the directory of git repository, default is ."
-        log_info "[cron expression] cron expression of back up the git repo"
+        log_info "[repo-dir]        the directory of git repository specified by -d , default is ."
+        log_info "[cron expression] cron expression of back up the git repo periodically, specified by -c"
         log_info "OPTIONS : "
         log_info "[-h] --help , print usage info"
-        log_info "[-d] --dir [repo-dir], optional"
+        log_info "[-d] --dir [repo-dir], specify the git repository"
         log_info "[-p] --push , push the backup to remote, optional"
-        log_info "[-r] --recur, dir recurtive mode, backup all subdir at [repo-dir]"
-        log_info "[-n] --now  , do back up right now"
-        log_info "[-c] --cron , do back up regularly"
-        log_info "[-c/-n] must have at lease one of two option"
+        log_info "[-l] --log  , specify the periodical backup log file, default is ~/.gitbackup.log"
+        log_info "[-r] --recur, dir recursive mode, backup all subdir at [repo-dir]"
+        log_info "[-n] --now  , do back up once right now"
+        log_info "[-c] --cron [cron expression], do back up periodically"
+        log_info "[-c/-n] must given at least one of two option"
         log_info "EXAMPLE :  "
         log_info "1. Backup current git repository regularly and push remote"
         log_info "       ./git-backup.sh -p -c '0 12 * * *' "
@@ -421,7 +424,7 @@ function parse_param() {
                 P_IS_NOW=true
             elif [[ ${param} == "-p" || ${param} == "--push" ]]; then
                 P_NEED_PUSH=true
-            elif [[ ${param} == "-r" || ${param} == "--recurtive" ]]; then
+            elif [[ ${param} == "-r" || ${param} == "--recursive" ]]; then
                 P_DIR_RECURSIVE=true
             elif [[ ${param} == "-l" || ${param} == "--log" ]]; then
                 ((idx++))
