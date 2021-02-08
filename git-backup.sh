@@ -141,9 +141,10 @@ function init_env_param() {
 
 # init git param, should after init_env_param
 function init_git_param() {
+    CURRENT_TIME=$(date +"%Y%m%d%H%m%S")
     echo ""
     log_info "=============================================================================="
-    log_succ "==    Repository ${REPOSITORY_NAME}"
+    log_succ "==    Repository ${REPOSITORY_NAME}, now : ${CURRENT_TIME}"
     log_succ "==    Ready to back up Git at ${ROOT_DIR}"
     log_info "=============================================================================="
     echo ""
@@ -160,7 +161,6 @@ function init_git_param() {
         fi
     fi
     CURRENT_UP_STREAM=$(git rev-parse --abbrev-ref ${CURRENT_BRANCH}@{upstream})
-    CURRENT_TIME=$(date +"%Y%m%d%H%m%S")
     USR_NAME=$(git config user.name)
     if [[ -z ${USR_NAME} ]]; then
         USR_NAME=$(id -u -n)
