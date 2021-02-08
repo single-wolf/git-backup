@@ -62,6 +62,12 @@ git-backup.sh [-h] [-d] [repo-dir] [-c] [cron expression] [-p] [-n] [-r] [-l]
 3. Backup all subdirectory under /User/xx once and push remote
 	- ./git-backup.sh -n -r -p -d /User/xx/
 
+## FAQ
+
+#### 1. Failed to push to remote during periodical execution, Permission denied (publickey)
+
+Please make sure you have the correct access rights. If the script works well on command line, then you should detect whether your ssh key is no password.
+
 ## License
 
 [MIT License](./LICENSE).
