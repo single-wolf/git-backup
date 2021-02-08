@@ -17,6 +17,7 @@
 - Support backup branch management, such as prune history backup periodically
 - Add a special git hook to the repository, so that only fetch the backup branch that belong to current user from remote
 - Support authentication when push the backup to remote
+- Support setting cron on Windows
 - ...
 
 

@@ -145,7 +145,7 @@ function init_git_param() {
     echo ""
     log_info "=============================================================================="
     log_succ "==    Repository ${REPOSITORY_NAME}, now : ${CURRENT_TIME}"
-    log_succ "==    Ready to back up Git at ${ROOT_DIR}"
+    log_succ "==    Ready to back up Git at ${ROOT_DIR} by ${USER}"
     log_info "=============================================================================="
     echo ""
     cd ${ROOT_DIR}
