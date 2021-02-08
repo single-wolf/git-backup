@@ -282,8 +282,11 @@ function backup_now() {
 function push_remote() {
     if [[ -n ${CURRENT_UP_STREAM} ]]; then
         remote_backup="${CURRENT_UP_STREAM%%/*}"
-        git push -q --no-verify --set-upstream "${remote_backup}" "${BACKUP_BRANCH}:${BACKUP_BRANCH}"
-        log_succ "Push backup branch to remote successfully, name : ${remote_backup}/${BACKUP_BRANCH}"
+        if git push -q --no-verify --set-upstream "${remote_backup}" "${BACKUP_BRANCH}:${BACKUP_BRANCH}"; then
+            log_succ "Push backup branch to remote successfully, name : ${remote_backup}/${BACKUP_BRANCH}"
+        else
+            log_warn "Push backup branch to remote failed, name : ${remote_backup}/${BACKUP_BRANCH}"
+        fi
     else
         log_warn "No upstream found at current branch:${CURRENT_BRANCH}, will try all remote to push backup"
         if [[ -z $(git remote) ]]; then
