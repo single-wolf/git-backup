@@ -141,9 +141,10 @@ function init_env_param() {
 
 # init git param, should after init_env_param
 function init_git_param() {
+    CURRENT_TIME=$(date +"%Y%m%d%H%m%S")
     echo ""
     log_info "=============================================================================="
-    log_succ "==    Repository ${REPOSITORY_NAME}"
+    log_succ "==    Repository ${REPOSITORY_NAME}, now : ${CURRENT_TIME}"
     log_succ "==    Ready to back up Git at ${ROOT_DIR}"
     log_info "=============================================================================="
     echo ""
@@ -160,7 +161,6 @@ function init_git_param() {
         fi
     fi
     CURRENT_UP_STREAM=$(git rev-parse --abbrev-ref ${CURRENT_BRANCH}@{upstream})
-    CURRENT_TIME=$(date +"%Y%m%d%H%m%S")
     USR_NAME=$(git config user.name)
     if [[ -z ${USR_NAME} ]]; then
         USR_NAME=$(id -u -n)
@@ -232,9 +232,9 @@ function pre_check() {
             return 1
         else
             if ${IS_LOCAL_CLEAN}; then
-                log_info "Local working tree is clean but no upstream or not up-to-date, will back up"
+                log_succ "Local working tree is clean but no upstream or not up-to-date, will back up"
             else
-                log_info "Local working tree is dirty and no backup or modified after back up, will back up"
+                log_succ "Local working tree is dirty and no backup or modified after back up, will back up"
             fi
         fi
     fi
@@ -282,8 +282,11 @@ function backup_now() {
 function push_remote() {
     if [[ -n ${CURRENT_UP_STREAM} ]]; then
         remote_backup="${CURRENT_UP_STREAM%%/*}"
-        git push -q --no-verify --set-upstream "${remote_backup}" "${BACKUP_BRANCH}:${BACKUP_BRANCH}"
-        log_succ "Push backup branch to remote successfully, name : ${remote_backup}/${BACKUP_BRANCH}"
+        if git push -q --no-verify --set-upstream "${remote_backup}" "${BACKUP_BRANCH}:${BACKUP_BRANCH}"; then
+            log_succ "Push backup branch to remote successfully, name : ${remote_backup}/${BACKUP_BRANCH}"
+        else
+            log_warn "Push backup branch to remote failed, name : ${remote_backup}/${BACKUP_BRANCH}"
+        fi
     else
         log_warn "No upstream found at current branch:${CURRENT_BRANCH}, will try all remote to push backup"
         if [[ -z $(git remote) ]]; then
