@@ -232,9 +232,9 @@ function pre_check() {
             return 1
         else
             if ${IS_LOCAL_CLEAN}; then
-                log_info "Local working tree is clean but no upstream or not up-to-date, will back up"
+                log_succ "Local working tree is clean but no upstream or not up-to-date, will back up"
             else
-                log_info "Local working tree is dirty and no backup or modified after back up, will back up"
+                log_succ "Local working tree is dirty and no backup or modified after back up, will back up"
             fi
         fi
     fi
