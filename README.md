@@ -15,8 +15,6 @@
 **TODO**:(Contributions welcome)
 
 - Support backup branch management, such as prune history backup periodically
-- Add a special git hook to the repository, so that only fetch the backup branch that belong to current user from remote
-- Support authentication when push the backup to remote
 - Support setting cron on Windows
 - ...
 
@@ -66,7 +64,7 @@ git-backup.sh [-h] [-d] [repo-dir] [-c] [cron expression] [-p] [-n] [-r] [-l]
 
 #### 1. Failed to push to remote during periodical execution, Permission denied (publickey)
 
-Please make sure you have the correct access rights. If the script works well on command line, then you should detect whether your ssh key is no password.
+Please make sure you have the correct access rights to the repository. If the script works well on command line, then you should check whether the ssh key is passwordless.
 
 ## License
 

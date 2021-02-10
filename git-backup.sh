@@ -101,7 +101,7 @@ function set_cron() {
 
 # init env param
 function init_env_param() {
-    local unamestr=$(uname -s | tr '[:upper:]' '[:lower:]')
+    local unamestr=$(uname -s | tr '[A-Z]' '[a-z]')
     case ${unamestr} in
     linux*)
         ENV_OSTYPE="Linux"
@@ -324,20 +324,17 @@ function backup_done() {
     echo ""
 }
 
-# directory recurtive backup
-function recurtive_backup() {
+# directory recursive backup
+function recursive_backup() {
     if [[ -z $(ls -d */) ]]; then
-        log_error "Recutive git repo directory is empty and no subdirectory : ${P_REPO_DIR}"
+        log_error "Git repo directory is empty and no subdirectory : ${P_REPO_DIR}"
         return 1
     fi
     if [[ -n ${P_CRON_EXP} ]]; then
         set_cron
     fi
-    if ${P_DIR_RECURSIVE}; then
-        local param_recur="--log ${LOG_PATH}"
-        if ${P_IS_NOW}; then
-            param_recur="${param_recur} -n"
-        fi
+    if ${P_IS_NOW}; then
+        local param_recur="-n --log ${LOG_PATH}"
         if ${P_NEED_PUSH}; then
             param_recur="${param_recur} -p"
         fi
@@ -444,7 +441,7 @@ function parse_param() {
         fi
         idx=$(expr $idx + 1)
     done
-    if [[ -z ${P_CRON_EXP} && ! ${P_IS_NOW} ]]; then
+    if [[ -z ${P_CRON_EXP} ]] && ! ${P_IS_NOW}; then
         log_warn "[-c/-n] must have one of two option at lease"
         print_help
     fi
@@ -456,7 +453,7 @@ function main() {
         init_env_param || exit 1
         # dir recursive mode
         if ${P_DIR_RECURSIVE}; then
-            recurtive_backup
+            recursive_backup
         else
             if [[ -n ${P_CRON_EXP} ]]; then
                 set_cron || exit 1
