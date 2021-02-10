@@ -3,7 +3,11 @@
 
 ## Overview
 
-**git-backup.sh** is a shell script for `automatic and incremental backup` of git repositories. Using this script, developers don’t need to worry about losing code due to incorrect merge branches and other computer emergencies. Have fun with it `XD`
+**git-backup.sh** is a shell script for `automatic and incremental backup` of git repositories. Using this script, developers don’t need to worry about losing code due to incorrect merge branches and other computer emergencies. 
+
+Most importantly, you can easily backup your git repositories periodically in background without modifying the content of the current working tree and index. In Additon, you can code, checkout or merge on the repository at will without worrying about conflicts between different backup, the backup script can track branches, and there will no conflicts between different branches and different developers with a configurable pushing remote.
+
+Merge requests are welcome :)
 
 **Features**:
 
@@ -12,7 +16,7 @@
 3. Support push backup branch to remote repositories and track the remote one
 4. Support directory mode so that can back up all repositories under the given directory
 
-**TODO**:(Contributions welcome)
+**Wish List**:
 
 - Support backup branch management, such as prune history backup periodically
 - Support setting cron on Windows
