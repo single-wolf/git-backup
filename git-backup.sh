@@ -160,6 +160,10 @@ function init_git_param() {
             return 1
         fi
     fi
+    if [[ "${CURRENT_BRANCH}" == "${BACKUP_PREFIX}"* ]]; then
+        log_warn "Current branch ${CURRENT_BRANCH} is a backup branch, skip and exit"
+        return 1
+    fi
     CURRENT_UP_STREAM=$(git rev-parse --abbrev-ref ${CURRENT_BRANCH}@{upstream})
     USR_NAME=$(git config user.name)
     if [[ -z ${USR_NAME} ]]; then
