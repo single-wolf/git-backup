@@ -171,7 +171,7 @@ function init_git_param() {
     fi
     BACKUP_BRANCH="${BACKUP_PREFIX}${CURRENT_BRANCH}-${USR_NAME}"
     if ! git rev-parse --quiet --verify ${BACKUP_BRANCH} >/dev/null; then
-        log_info "Cannot find a local backup branch , will try remote, name : ${BACKUP_BRANCH}"
+        log_info "Cannot find a local backup branch , will try remote one, name : ${BACKUP_BRANCH}"
         for remote in $(git remote); do
             remote_branch="remotes/${remote}/${BACKUP_BRANCH}"
             if git rev-parse --quiet --verify ${remote_branch} >/dev/null; then
@@ -183,7 +183,7 @@ function init_git_param() {
             log_info "Cannot find a remote backup branch , will create one"
             HAS_HISTORY=false
         else
-            log_info "Find a remote backup branch , create local branch to track it, name : ${REMOTE_BACKUP_BRANCH}"
+            log_info "Find a remote backup branch , will create local branch to track it, name : ${REMOTE_BACKUP_BRANCH}"
             if ! git branch -q ${BACKUP_BRANCH} --track ${REMOTE_BACKUP_BRANCH}; then
                 log_error "Failed to create local branch to track it, name : ${REMOTE_BACKUP_BRANCH}"
                 return 1
@@ -236,9 +236,9 @@ function pre_check() {
             return 1
         else
             if ${IS_LOCAL_CLEAN}; then
-                log_succ "Local working tree is clean but no upstream or not up-to-date, will back up"
+                log_succ "Local working tree is clean but no upstream or not up-to-date, Let's back it up"
             else
-                log_succ "Local working tree is dirty and no backup or modified after back up, will back up"
+                log_succ "Local working tree is dirty and there is no backup ,or content was modified after back up, Let's back it up"
             fi
         fi
     fi
